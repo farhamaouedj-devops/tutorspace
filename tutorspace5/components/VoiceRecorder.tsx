@@ -37,7 +37,7 @@ export default function VoiceRecorder({ exerciseId, userId, roleType, isProf }: 
     const channel = supabase
       .channel(`voice-${exerciseId}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'voice_messages', filter: `exercise_id=eq.${exerciseId}` },
-        payload => setMessages(prev => [...prev, payload.new as VoiceMessage]))
+        (payload: any) => setMessages(prev => [...prev, payload.new as VoiceMessage]))
       .subscribe()
     return () => { supabase.removeChannel(channel) }
   }, [exerciseId])
