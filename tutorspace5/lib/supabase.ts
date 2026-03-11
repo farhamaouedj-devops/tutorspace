@@ -1,10 +1,25 @@
 // lib/supabase.ts
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+let _supabase: SupabaseClient | null = null
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export function getSupabase() {
+  if (!_supabase) {
+    _supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  }
+  return _supabase
+}
+
+// Export direct pour compatibilité avec le code existant
+export const supabase = typeof window !== 'undefined' || process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+    )
+  : null as any
 
 export type Profile = {
   id: string
@@ -12,6 +27,7 @@ export type Profile = {
   full_name: string
   role: 'admin' | 'student'
   is_approved: boolean
+  prof_code?: string
   avatar_url?: string
   created_at: string
 }
@@ -33,15 +49,6 @@ export type Exercise = {
   created_by: string
   is_active: boolean
   created_at: string
-}
-
-export type CanvasData = {
-  id: string
-  exercise_id: string
-  user_id: string
-  panel: 'left' | 'right'
-  strokes: Stroke[]
-  updated_at: string
 }
 
 export type Stroke = {
