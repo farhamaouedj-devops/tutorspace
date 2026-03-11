@@ -1,0 +1,134 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0f0e0b;
+  --paper: #faf7f0;
+  --paper-warm: #f5f0e8;
+  --amber: #e8a030;
+  --amber-light: #f5c060;
+  --amber-dark: #b87a18;
+  --sage: #5a7a60;
+  --slate: #2a3140;
+  --slate-mid: #3d4a5c;
+  --slate-light: #566070;
+  --chalk: #f0ece0;
+  --red-mark: #d94040;
+  --blue-mark: #3060c0;
+  --grid-line: rgba(232, 160, 48, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--ink);
+  color: var(--paper);
+  min-height: 100vh;
+}
+
+h1, h2, h3, .font-display {
+  font-family: 'Syne', sans-serif;
+}
+
+/* Notebook grid background */
+.grid-bg {
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Paper texture for panels */
+.paper-panel {
+  background-color: #fdfaf3;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+}
+
+/* Blackboard texture */
+.blackboard {
+  background: linear-gradient(135deg, #1a2535 0%, #0f1820 50%, #151f2e 100%);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.4);
+}
+
+/* Animated underline */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--amber);
+  transition: width 0.3s ease;
+}
+.hover-underline:hover::after { width: 100%; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--slate); }
+::-webkit-scrollbar-thumb { background: var(--slate-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+
+/* Glow effects */
+.glow-amber { box-shadow: 0 0 20px rgba(232, 160, 48, 0.3); }
+.glow-blue  { box-shadow: 0 0 20px rgba(48, 96, 192, 0.4); }
+.glow-red   { box-shadow: 0 0 20px rgba(217, 64, 64, 0.4); }
+
+/* Canvas cursor */
+.canvas-pen     { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='4' fill='%23e8a030'/%3E%3C/svg%3E") 12 12, crosshair; }
+.canvas-eraser  { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='4' y='4' width='16' height='16' rx='2' fill='%23fff' opacity='0.8'/%3E%3C/svg%3E") 12 12, default; }
+.canvas-readonly { cursor: not-allowed; }
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-in { animation: fadeInUp 0.4s ease forwards; }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(232, 160, 48, 0.4); }
+  50%       { box-shadow: 0 0 24px rgba(232, 160, 48, 0.8); }
+}
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+@keyframes recording-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.15); opacity: 0.7; }
+}
+.recording-pulse { animation: recording-pulse 1s ease-in-out infinite; }
+
+/* Voice bubble styles */
+.bubble-prof {
+  background: linear-gradient(135deg, #1e3a5f, #243a6e);
+  border: 1px solid rgba(48, 96, 192, 0.5);
+  border-radius: 16px 16px 16px 4px;
+}
+.bubble-student {
+  background: linear-gradient(135deg, #3d2a10, #4a3018);
+  border: 1px solid rgba(232, 160, 48, 0.4);
+  border-radius: 16px 16px 4px 16px;
+}
+
+/* Badge */
+.badge-approved {
+  background: linear-gradient(90deg, #1a4028, #1e5030);
+  color: #6ee090;
+  border: 1px solid rgba(110, 224, 144, 0.3);
+}
+.badge-pending {
+  background: linear-gradient(90deg, #3d2a10, #4a3318);
+  color: #f5c060;
+  border: 1px solid rgba(245, 192, 96, 0.3);
+}
