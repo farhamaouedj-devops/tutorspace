@@ -79,7 +79,7 @@ export default function ExercisePage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const ch = supabase.channel(`voice-${exerciseId}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'voice_messages', filter: `exercise_id=eq.${exerciseId}` },
-        p => setVoices(prev => [...prev, p.new as VoiceMsg]))
+        (p: any) => setVoices(prev => [...prev, p.new as VoiceMsg]))
       .subscribe()
     return () => { supabase.removeChannel(ch) }
   }, [exerciseId])
