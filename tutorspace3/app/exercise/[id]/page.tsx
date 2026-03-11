@@ -1,6 +1,6 @@
 'use client'
 // app/exercise/[id]/page.tsx — Collaborative dual-panel workspace
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase, Profile, Exercise } from '@/lib/supabase'
