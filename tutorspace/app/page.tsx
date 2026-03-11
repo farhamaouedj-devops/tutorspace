@@ -23,12 +23,17 @@ export default function LoginPage() {
     const { data: profile } = await supabase
       .from('profiles').select('*').eq('id', data.user.id).single()
 
-    if (!profile?.is_approved) {
-      await supabase.auth.signOut()
-      setError('Votre compte est en attente de validation par le professeur.')
-      setLoading(false)
-      return
-    }
+    if (!profile) {
+  setError('Profil introuvable. Contactez l\'administrateur.')
+  setLoading(false)
+  return
+  }
+if (!profile.is_approved) {
+  await supabase.auth.signOut()
+  setError('Votre compte est en attente de validation par le professeur.')
+  setLoading(false)
+  return
+  }
     router.push('/dashboard')
   }
 
