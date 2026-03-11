@@ -12,28 +12,29 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  async function handleLogin(e: React.FormEvent) {
+async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError(error.message); setLoading(false); return }
 
-    // Check approval
     const { data: profile } = await supabase
       .from('profiles').select('*').eq('id', data.user.id).single()
 
     if (!profile) {
-  setError('Profil introuvable. Contactez l\'administrateur.')
-  setLoading(false)
-  return
-  }
-if (!profile.is_approved) {
-  await supabase.auth.signOut()
-  setError('Votre compte est en attente de validation par le professeur.')
-  setLoading(false)
-  return
-  }
+      setError('Profil introuvable. Contactez l\'administrateur.')
+      setLoading(false)
+      return
+    }
+
+    if (!profile.is_approved) {
+      await supabase.auth.signOut()
+      setError('Votre compte est en attente de validation par le professeur.')
+      setLoading(false)
+      return
+    }
+
     router.push('/dashboard')
   }
 
