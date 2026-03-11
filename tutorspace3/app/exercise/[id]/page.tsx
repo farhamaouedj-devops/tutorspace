@@ -7,8 +7,8 @@ import { supabase, Profile, Exercise } from '@/lib/supabase'
 import Canvas from '@/components/Canvas'
 import VoiceRecorder from '@/components/VoiceRecorder'
 
-export default function ExercisePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id: exerciseId } = use(params)
+export default function ExercisePage({ params }: { params: { id: string } }) {
+  const exerciseId = params.id
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [exercise, setExercise] = useState<Exercise | null>(null)
